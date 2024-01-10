@@ -1,30 +1,56 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+import axios from 'axios';
+import { store } from './store';
+import AppHeader from './components/AppHeader.vue';
+import ListaFilmSerie from './components/ListaFilmSerie.vue';
+
+export default {
+  components: {
+    AppHeader,
+    ListaFilmSerie
+
+
+  },
+  data() {
+    return {
+      store,
+      isLoading: true,
+    }
+  },
+  methods: {
+    getFilm() {
+      axios.get(this.store.apiURL)
+        .then(response => {
+          console.log(response);
+          this.store.films = response.data.results;
+        })
+        .catch(error => {
+          console.error("Errore:", error);
+        });
+    }
+  }
+};
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="d-flex justify-content-center align-items-center" v-if="isLoading" style="height: 100vh;">
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status">
+
+      </div>
+      <h1 class="mt-3">Caricamento in corso...</h1>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+
+  <div v-else>
+    <AppHeader />
+    <main>
+      <ListaFilmSerie />
+    </main>
+  </div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+<style lang="scss">
+@use './styles/general.scss';
 </style>
