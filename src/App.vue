@@ -42,7 +42,7 @@ export default {
   <div v-else> -->
   <AppHeader @search="handleSearch" />
   <main>
-    <ListaFilmSerie :films="store.films" />
+    <ListaFilmSerie />
   </main>
   <!-- </div> -->
 </template>

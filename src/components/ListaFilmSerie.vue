@@ -17,8 +17,8 @@ export default {
 </script>
 <template>
     <div class="container">
-        <div v-for="film in films" :key="film.id">
-            <CartaFilmSerie />
+        <div v-for="(film, index) in store.films" :key="index">
+            <CartaFilmSerie :film="film" />
         </div>
     </div>
 </template>

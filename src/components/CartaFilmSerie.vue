@@ -6,7 +6,7 @@ export default {
         film: Object
     },
     data() {
-        store
+        store: store
     }
 }
 </script>
