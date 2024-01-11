@@ -8,16 +8,26 @@ export const store = reactive({
     films: [],
     async startLoad() {
         try {
-            const response = await axios.get(`${API_BASE_URL}/discover/movie`, {
-                params: {
-                    api_key: API_KEY
-                }
+            const [moviesResponse, tvResponse] = await Promise.all([
+                axios.get(`${API_BASE_URL}/discover/movie`, {
+                    params: { api_key: API_KEY }
+                }),
+                axios.get(`${API_BASE_URL}/discover/tv`, {
+                    params: { api_key: API_KEY }
+                })
+            ]);
+
+            this.films = [...moviesResponse.data.results, ...tvResponse.data.results].map(item => {
+                return {
+                    ...item,
+                    title: item.title || item.name,
+                };
             });
-            this.films = response.data.results
         } catch (error) {
-            console.error("errore caricamento ", error);
+            console.error("Errore nel caricamento iniziale:", error);
         }
     },
+
     async searchFilms(query) {
         if (!query) {
             return this.startLoad();
@@ -36,6 +46,6 @@ export const store = reactive({
 
     }
 });
-store.startLoad();
+store.startLoad()
 
 
