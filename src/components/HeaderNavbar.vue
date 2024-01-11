@@ -1,6 +1,7 @@
 <!-- logo e voci della nav  -->
 <script>
 import { store } from '../store.js';
+import { watch } from 'vue';
 export default {
     name: 'HeaderNavbar',
     data() {
@@ -11,8 +12,12 @@ export default {
     },
     methods: {
         search() {
-            this.store.searchQuery = this.searchQuery;
             this.$emit('search', this.searchQuery);
+        }
+    },
+    watch: {
+        searchQuery(newQuery) {
+            this.store.searchFilms(newQuery);
         }
     }
 

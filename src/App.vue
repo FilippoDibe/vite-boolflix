@@ -17,7 +17,8 @@ export default {
   },
   methods: {
     handleSearch(query) {
-      this.$refs.listaFilmSerie.searchFilms(query);
+      store.searchFilms(query);
+
     }
   },
   setup() {

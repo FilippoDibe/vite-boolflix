@@ -5,9 +5,7 @@ export default {
     props: {
         film: Object
     },
-    data() {
-        store: store
-    }
+
 }
 </script>
 <template>
