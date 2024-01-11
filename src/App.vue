@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios';
 import { store } from './store';
 import AppHeader from './components/AppHeader.vue';
 import ListaFilmSerie from './components/ListaFilmSerie.vue';
@@ -13,44 +12,45 @@ export default {
   },
   data() {
     return {
-      store,
-      isLoading: true,
+      // isLoading: true,  scommentare per attivare il caricamento 
     }
   },
   methods: {
-    getFilm() {
-      axios.get(this.store.apiURL)
-        .then(response => {
-          console.log(response);
-          this.store.films = response.data.results;
-        })
-        .catch(error => {
-          console.error("Errore:", error);
-        });
+    handleSearch(query) {
+      this.$refs.listaFilmSerie.searchFilms(query);
     }
+  },
+  setup() {
+    return { store };
   }
+
+
 };
 
 </script>
 
 <template>
-  <div class="d-flex justify-content-center align-items-center" v-if="isLoading" style="height: 100vh;">
+  <!-- <div class="d-flex justify-content-center align-items-center" v-if="isLoading" style="height: 100vh;">
     <div class="text-center">
       <div class="spinner-border text-primary" role="status">
 
       </div>
       <h1 class="mt-3">Caricamento in corso...</h1>
     </div>
-  </div>
-
-  <div v-else>
-    <AppHeader />
-    <main>
-      <ListaFilmSerie />
-    </main>
-  </div>
+  </div> -->
+  <!-- 
+  <div v-else> -->
+  <AppHeader @search="handleSearch" />
+  <main>
+    <ListaFilmSerie :films="store.films" />
+  </main>
+  <!-- </div> -->
 </template>
 
 <style lang="scss">
 @use './styles/general.scss';
+
+main {
+  height: 50vh;
+}
 </style>

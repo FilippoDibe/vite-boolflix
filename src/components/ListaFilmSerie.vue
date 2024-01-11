@@ -6,16 +6,20 @@ export default {
     components: {
         CartaFilmSerie,
     },
-    computed: {
-        films() {
-            return store.films;
-        }
+    setup() {
+        return { store };
+    },
+    props: {
+        films: Array
     }
+
 }
 </script>
 <template>
-    <div class="container" v-for="(film, index) in films" :key="film.id">
-        <CartaFilmSerie :film="film" />
+    <div class="container">
+        <div v-for="film in films" :key="film.id">
+            <CartaFilmSerie />
+        </div>
     </div>
 </template>
 <style lang="scss" scoped></style>

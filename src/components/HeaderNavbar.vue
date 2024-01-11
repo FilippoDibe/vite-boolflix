@@ -1,7 +1,21 @@
 <!-- logo e voci della nav  -->
 <script>
+import { store } from '../store.js';
 export default {
-    name: 'HeaderNavSx'
+    name: 'HeaderNavbar',
+    data() {
+        return {
+            store,
+            searchQuery: ''
+        }
+    },
+    methods: {
+        search() {
+            this.store.searchQuery = this.searchQuery;
+            this.$emit('search', this.searchQuery);
+        }
+    }
+
 }
 </script>
 <template>
@@ -31,7 +45,12 @@ export default {
             <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active home" aria-current="page" href="#"> <i class="fa fa-search"></i></a>
+                        <input v-model="searchQuery" type="text" placeholder="Cerca un film...">
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link active home" @click="search" aria-current="page" href="#">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">BAMBINI</a>
