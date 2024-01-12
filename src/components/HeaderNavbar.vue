@@ -37,13 +37,19 @@ export default {
                         <a class="nav-link active home" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">SerieTV</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" href="#">Film</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link disabled" aria-disabled="true">Originali</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Aggiunti di recente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">La Mia Lista</a>
                     </li>
                 </ul>
             </div>
@@ -67,7 +73,8 @@ export default {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link disabled" aria-disabled="true"><img src="/img/Netflix-avatar.png" class="avatar"
+                                alt=""></a>
                     </li>
                 </ul>
             </div>
@@ -120,6 +127,10 @@ nav {
             font-size: 8px;
         }
 
+    }
+
+    .avatar {
+        width: 30px;
     }
 
 }

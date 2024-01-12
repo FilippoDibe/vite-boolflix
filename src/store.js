@@ -6,27 +6,30 @@ const API_KEY = '25cfa9c9e5b81db14a64ee70941fb62a';
 export const store = reactive({
 
     films: [],
+    // In store.js
     async startLoad() {
         try {
             const [moviesResponse, tvResponse] = await Promise.all([
-                axios.get(`${API_BASE_URL}/discover/movie`, {
-                    params: { api_key: API_KEY }
-                }),
-                axios.get(`${API_BASE_URL}/discover/tv`, {
-                    params: { api_key: API_KEY }
-                })
+                axios.get(`${API_BASE_URL}/discover/movie`, { params: { api_key: API_KEY } }),
+                axios.get(`${API_BASE_URL}/discover/tv`, { params: { api_key: API_KEY } })
             ]);
 
-            this.films = [...moviesResponse.data.results, ...tvResponse.data.results].map(item => {
-                return {
-                    ...item,
-                    title: item.title || item.name,
-                };
-            });
+            this.films = moviesResponse.data.results.map(item => ({
+                ...item,
+                title: item.title || item.name,
+                isMovie: true
+            }));
+
+            this.tvSeries = tvResponse.data.results.map(item => ({
+                ...item,
+                title: item.title || item.name,
+                isMovie: false
+            }));
         } catch (error) {
             console.error("Errore nel caricamento iniziale:", error);
         }
     },
+
 
     async searchFilms(query) {
         if (!query) {
@@ -44,8 +47,10 @@ export const store = reactive({
             console.error("errore enlla carica dei film", error)
         }
 
-    }
+    },
+
 });
 store.startLoad()
+
 
 

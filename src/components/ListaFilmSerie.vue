@@ -11,15 +11,33 @@ export default {
     },
     props: {
         films: Array
-    }
+    },
 
 }
 </script>
 <template>
-    <div class="container">
-        <div v-for="(film, index) in store.films" :key="index">
-            <CartaFilmSerie :film="film" />
+    <div class="container m-2">
+        <!-- Sezione per i Film -->
+        <div class="film-row">
+            <div v-for="(film, index) in store.films" :key="index">
+                <CartaFilmSerie :film="film" />
+            </div>
+        </div>
+
+        <!-- Sezione per le Serie TV -->
+        <div class="tv-row ">
+            <div v-for="(serie, index) in store.tvSeries" :key="index">
+                <CartaFilmSerie :film="serie" />
+            </div>
         </div>
     </div>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.film-row,
+.tv-row {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100vw;
+}
+</style>
