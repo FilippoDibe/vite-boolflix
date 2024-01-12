@@ -36,18 +36,30 @@ export const store = reactive({
             return this.startLoad();
         }
         try {
-            const response = await axios.get(`${API_BASE_URL}/search/movie`, {
-                params: {
-                    api_key: API_KEY,
-                    query: query
-                }
-            });
-            this.films = response.data.results
-        } catch (error) {
-            console.error("errore enlla carica dei film", error)
-        }
+            const [movieResponse, tvResponse] = await Promise.all([
+                axios.get(`${API_BASE_URL}/search/movie`, {
+                    params: {
+                        api_key: API_KEY,
+                        query: query
+                    }
+                }),
+                axios.get(`${API_BASE_URL}/search/tv`, {
+                    params: {
+                        api_key: API_KEY,
+                        query: query
+                    }
+                })
+            ]);
 
-    },
+            this.films = [
+                ...movieResponse.data.results.map(movie => ({ ...movie, isMovie: true })),
+                ...tvResponse.data.results.map(tv => ({ ...tv, isMovie: false }))
+            ];
+        } catch (error) {
+            console.error("Errore nella ricerca di film e serie TV", error);
+        }
+    }
+
 
 });
 store.startLoad()
