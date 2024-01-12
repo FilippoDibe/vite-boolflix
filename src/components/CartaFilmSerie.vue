@@ -66,7 +66,7 @@ export default {
             <div class="card back">
                 <div class="card-body">
                     <h3 class="card-title">{{ film.title }}</h3>
-                    <p class="card-text">Titolo Originale: {{ film.original_title }}</p>
+                    <p class="card-text">Titolo Originale: {{ film.original_title || film.original_name }}</p>
                     <p class="card-text">Lingua: <img :src="getFlagUrl(film)" alt="Bandiera" /></p>
                     <div class="rating">
                         <!-- Stelline piene -->
@@ -84,74 +84,87 @@ export default {
 @use '../styles/partials/variables.scss' as *;
 
 .card-container {
-    perspective: 1000px;
-    width: 300px;
-    height: 500px;
-    margin: 30px 0;
+    width: 300px; // Larghezza della carta
+    height: 500px; // Altezza della carta
 }
 
 .card-flip {
     width: 100%;
     height: 100%;
     position: relative;
-    transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
-
+    transition: transform 0.7s;
     transform-style: preserve-3d;
-
 
     &:hover {
         transform: rotateY(180deg);
-        transition-delay: 0.1s;
-
-
-    }
-
-    .card-img-top {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
     }
 }
 
 .card {
     width: 100%;
     height: 100%;
-    background-color: black;
     position: absolute;
-    transform-origin: center center;
-
-
-    .card-title {
-        font-size: 20px;
-        font-weight: bold;
-    }
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
 }
 
 .front {
-    backface-visibility: hidden;
-    transform: rotateY(0deg);
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: 0;
+    }
 
-
+    border: black;
 }
 
+.front,
+.back {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
 
 .back {
-    backface-visibility: hidden;
-
-    // Stili per la faccia posteriore
     transform: rotateY(180deg);
-    background-color: rgb(14, 14, 14);
-    color: white
+    background-color: black;
+    color: white;
 }
 
-.star {
+.card-title,
+.card-text {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.card-title {
+    font-size: 1.2rem;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.star,
+.star-empty {
     color: gold;
     margin-right: 2px;
 }
 
 .star-empty {
     color: grey;
-    margin-right: 2px;
 }
 </style>

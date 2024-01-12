@@ -36,7 +36,7 @@ export const store = reactive({
             return this.startLoad();
         }
         try {
-            const [movieResponse, tvResponse] = await Promise.all([
+            const [moviesResponse, tvResponse] = await Promise.all([
                 axios.get(`${API_BASE_URL}/search/movie`, {
                     params: {
                         api_key: API_KEY,
@@ -51,14 +51,23 @@ export const store = reactive({
                 })
             ]);
 
-            this.films = [
-                ...movieResponse.data.results.map(movie => ({ ...movie, isMovie: true })),
-                ...tvResponse.data.results.map(tv => ({ ...tv, isMovie: false }))
-            ];
+            this.films = moviesResponse.data.results.map(item => ({
+                ...item,
+                title: item.title || item.name, // Serie TV usano 'name'
+                isMovie: true
+            }));
+
+            this.tvSeries = tvResponse.data.results.map(item => ({
+                ...item,
+                title: item.title || item.name,
+                isMovie: false
+            }));
         } catch (error) {
             console.error("Errore nella ricerca di film e serie TV", error);
         }
     }
+
+
 
 
 });
